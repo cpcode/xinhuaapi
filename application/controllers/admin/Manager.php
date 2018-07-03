@@ -1,13 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Manager extends CI_Controller {
+class Manager extends MY_Controller {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper('cookie');
-        $this->load->library('session');
         $this->load->model('Manager_model','manager_model');
         $this->load->library('form_validation');
     }
@@ -17,36 +15,37 @@ class Manager extends CI_Controller {
     }
 
     //登录表单验证
-    public function cklogin(){
-        $username= $this->input->post('username');
+    public function cklogin()
+    {
+        $username = $this->input->post('username');
         $password = md5($this->input->post('password'));
         $res = $this->manager_model->getuserbyname($username);
-        if($res){
-            if($password != $res->password){
-                $data['alert'] ="账号或密码错误！";
-                $this->load->view('admin/login.html',$data);
+        if ($res) {
+            if ($password != $res->password) {
+                $data['alert'] = "账号或密码错误！";
+                $this->load->view('admin/login.html', $data);
                 return false;
-            }else{
-                $this->session->name=$username;
-                $this->session->userid=$res->id;
+            } else {
+                $this->session->name = $username;
+                $this->session->userid = $res->id;
                 $cookie = array(
-                    'name'   => 'name',
-                    'value'  => $res->name,
+                    'name' => 'name',
+                    'value' => $res->name,
                     'expire' => '80000'
                 );
                 $this->input->set_cookie($cookie);
                 $cookie2 = array(
-                    'name'   => 'userid',
-                    'value'  => $res->id,
+                    'name' => 'userid',
+                    'value' => $res->id,
                     'expire' => '80000'
                 );
                 $this->input->set_cookie($cookie2);
                 $this->manager_model->replacelogtime($res->id);
                 redirect('admin/manager/index');
             }
-        }else{
-            $data['alert'] ="账号或密码错误！";
-            $this->load->view('admin/login.html',$data);
+        } else {
+            $data['alert'] = "账号或密码错误！";
+            $this->load->view('admin/login.html', $data);
             return false;
         }
 
@@ -58,9 +57,8 @@ class Manager extends CI_Controller {
         $this->input->set_cookie('userid','');
         $this->session->unset_userdata('name');
         $this->session->unset_userdata('userid');
-        redirect('welcome');
+        redirect('login');
     }
-
 
 
 }

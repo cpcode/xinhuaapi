@@ -1,35 +1,43 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class  Manager_model extends CI_Model
+class  User_model extends CI_Model
 {
 //添加一个用户
 public function add($post)
 {
     $data = array(
-        'password' => md5($post['password']),
         'username' => $post['name'],
+        'password' => md5($post['password']),
         'realname' => $post['realname'],
+        'appkey' => $this->addkeys(),
+        'create_time' => date('Y-m-d h:i:s'),
+        'update_time' => date('Y-m-d h:i:s')
+
     );
     return $this->db->insert('manager', $data);
+}
+public  function  addkeys()
+{
+    return md5("ddd");
 }
 
 //获取所有用户
 public function getall()
 {
-    return $this->db->get('manager');
+    return $this->db->get('user');
 }
 
 //根据id获取用户
 public function getsta($id)
 {
-    $res = $this->db->get_where('manager', array('id' => $id));
+    $res = $this->db->get_where('user', array('id' => $id));
     return $res->row();
 }
 
 //根据账号取回用户
 public function getuserbyname($name)
 {
-    $query = $this->db->get_where('manager', array('username' => $name));
+    $query = $this->db->get_where('user', array('username' => $name));
     return $query->row();
 }
 
@@ -40,10 +48,10 @@ public function setstatus($id)
     $this->db->where('id', $id);
     if ($status) {
         $data = array('isable' => 0);
-        $bool = $this->db->update('manager', $data);
+        $bool = $this->db->update('user', $data);
     } else {
         $data = array('isable' => 1);
-        $bool = $this->db->update('manager', $data);
+        $bool = $this->db->update('user', $data);
     }
     return $bool;
 }
@@ -52,7 +60,7 @@ public function setstatus($id)
     public function replacelogtime($id){
         $time = date("Y-m-d h:i:s",time());
         $this->db->where('id', $id);
-        $this->db->update('manager', array('lastlogintime'=>$time));
+        $this->db->update('manager', array('update_time'=>$time));
     }
 }
 ?>
