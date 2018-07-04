@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.1.50',
-	'username' => 'xdbb',
-	'password' => 'xinhuadashuju',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '123456',
 	'database' => 'xinhuaapi',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => 'api_',

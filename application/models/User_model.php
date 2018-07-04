@@ -6,7 +6,7 @@ class  User_model extends CI_Model
 public function add($post)
 {
     $data = array(
-        'username' => $post['name'],
+        'username' => $post['username'],
         'password' => md5($post['password']),
         'realname' => $post['realname'],
         'appkey' => $this->addkeys(),
@@ -14,7 +14,7 @@ public function add($post)
         'update_time' => date('Y-m-d h:i:s')
 
     );
-    return $this->db->insert('manager', $data);
+    return $this->db->insert('user', $data);
 }
 public  function  addkeys()
 {
@@ -44,7 +44,7 @@ public function getuserbyname($name)
 //停用启用某用户
 public function setstatus($id)
 {
-    $status = $this->getsta($id)->status;
+    $status = $this->getsta($id)->isable;
     $this->db->where('id', $id);
     if ($status) {
         $data = array('isable' => 0);
@@ -55,6 +55,19 @@ public function setstatus($id)
     }
     return $bool;
 }
+    //更新用户
+    public function update($post){
+        $data = array(
+            'username' =>	$post['username'],
+            'realname' =>	$post['realname'],
+             'isable' =>	$post['isable'],
+            'update_time'=>date("Y-m-d h:i:s")
+        );
+         if (isset($post['password'])&&$post['password']!='')
+             $data['password']=$post['password'];
+        $this->db->where('id',$post['id']);
+        return $this->db->update('user', $data);
+    }
 
 //更新用户登录时间
     public function replacelogtime($id){

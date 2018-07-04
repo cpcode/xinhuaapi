@@ -36,7 +36,7 @@ public function getuserbyname($name)
 //停用启用某用户
 public function setstatus($id)
 {
-    $status = $this->getsta($id)->status;
+    $status = $this->getsta($id)->isable;
     $this->db->where('id', $id);
     if ($status) {
         $data = array('isable' => 0);

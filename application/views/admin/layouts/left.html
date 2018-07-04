@@ -44,9 +44,7 @@
 
             <li class="treeview <?php echo isset($siderid)&&$siderid==3?'active':'';?>">
                 <a href="#"><i class="fa fa-user"></i> <span>用户管理</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href=""><i class="fa fa-circle-o"></i> 后台用户管理</a></li>
@@ -61,11 +59,11 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i>新华数据接口 </a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i>接口源管理</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i> 接口购买</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i> 接口充值</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i> 接口统计</a></li>
+                    <li><a href="<?php echo site_url('admin/product'); ?>"><i class="fa fa-circle-o"></i>新华数据接口 </a></li>
+                    <li><a href="<?php echo site_url('admin/statis'); ?>"><i class="fa fa-circle-o"></i>接口源管理</a></li>
+                    <li><a href="<?php echo site_url('admin/userpro'); ?>"><i class="fa fa-circle-o"></i> 接口购买</a></li>
+                    <li><a href="<?php echo site_url('admin/recharge'); ?>"><i class="fa fa-circle-o"></i> 接口充值</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> 接口统计</a></li>
                 </ul>
             </li>
 

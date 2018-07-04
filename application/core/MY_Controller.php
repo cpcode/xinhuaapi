@@ -10,11 +10,12 @@ class MY_Controller extends CI_Controller{
     }
 //通用检测登录
     function check_login(){
-        $userid = $this->session->userid;
-        if(!$userid){
+        $adminid= $this->session->adminid;
+        if(!$adminid){
             redirect('login');
         }
     }
+    /*左侧权限判断*/
      function permitions()
     {
 

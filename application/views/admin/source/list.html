@@ -7,12 +7,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-      企业用户管理
-            <small>用户列表</small>
+      接口源管理
+            <small>接口源列表</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 用户管理</a></li>
-            <li class="active">企业用户管理</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> 接口管理</a></li>
+            <li class="active">接口源列表</li>
         </ol>
     </section>
 
@@ -22,14 +22,14 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">企业用户列表</h3>
+                        <h3 class="box-title">接口源列表</h3>
                     </div><!-- /.box-header -->
                     <div class="row page-title-row" style="margin:5px;">
                         <div class="col-md-6">
                         </div>
                         <div class="col-md-6 text-right">
-                            <a href="<?php echo site_url('/admin/user/add'); ?>" class="btn btn-success btn-md">
-                                <i class="fa fa-plus-circle"></i> 添加账号
+                            <a href="<?php echo site_url('/admin/statis/add'); ?>" class="btn btn-success btn-md">
+                                <i class="fa fa-plus-circle"></i>  添加接口源
                             </a>
                         </div>
                     </div>
@@ -37,31 +37,24 @@
                         <div class="row"><table id="example2" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>用户名</th>
-                                <th>企业名称</th>
-                                <th>appkey</th>
+                                <th>接口源名称</th>
+                                <th>api接口调用名</th>
+                                <th>调用次数</th>
                                 <th>创建时间</th>
                                 <th>近期登录</th>
-                                <th>开启/禁用</th>
+                                <th> 操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach($users as $user):?>
+                            <?php foreach($statislist as $statis):?>
                             <tr>
-                                <td><a href="<?php echo site_url('admin/user/edit/').$user->id?>"> <?=$user->username?></a></td>
-                                <td><?=$user->realname?></td>
-                                <td><?=$user->appkey?></td>
-                                <td><?=$user->create_time?></td>
-                                <td><?=$user->update_time?></td>
-                                <td>
-                                    <div class="checkbox checkbox-slider--b-flat checkbox-slider-md">
-                                        <label>
-                                            <input type="checkbox" value="<?=$user->id?>" name="isenable" <?=$user->isable?'checked':''; ?> ><span></span>
-                                        </label>
-                                    </div>
-                                </td>
-                               <!-- <td>  <a style="margin:3px;" href="#" attr="<?=$user->id?>" class="delBtn X-Small btn-xs text-danger "><i class="fa fa-times-circle-o"></i> 删除</a></td>
-                           --> </tr>
+                                <td><a href="<?php echo site_url('admin/statis/edit/').$statis->id?>"> <?=$statis->all_name?></a></td>
+                                <td><?=$statis->api_name?></td>
+                                <td><?=$statis->count?></td>
+                                <td><?=$statis->create_time?></td>
+                                <td><?=$statis->update_time?></td>
+                              <td>  <a style="margin:3px;" href="<?php echo site_url('admin/statis/delete/').$statis->id?>" attr="<?=$statis->id?>" class="delBtn X-Small btn-xs text-danger "><i class="fa fa-times-circle-o"></i> 删除</a></td>
+                         </tr>
                             <?php endforeach; ?>
                             </tbody>
                         </table></div>
@@ -76,18 +69,3 @@
 <!-- /.content-wrapper -->
 
 <?php $this->load->view('admin/layouts/footer.html'); ?>
-
-<script type="text/javascript">
-    $(function () {
-        $("input[name='isenable']").click(function () {
-            $.post("<?php echo site_url('admin/user/setstatus/')?>"+$(this).val(),function(data){
-                if(data){
-                    alert("操作成功");
-                    } else{
-                    alert("您无此权限");
-                }
-            });
-        });
-    });
-
-</script>
