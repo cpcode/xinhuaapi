@@ -31,7 +31,8 @@ class Product extends MY_Controller {
         if (count($data)>0)
         {
             $this->product_model->add($data);
-            redirect('admin/product');
+            show("操作成功",'admin/product');
+            exit();
         }
         else{
             $this->load->view('admin/product/add.html');

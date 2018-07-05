@@ -26,8 +26,8 @@
             <div class="col-md-6">
             </div>
             <div class="col-md-6 text-right">
-                <a href="#" id="buy" class="btn btn-success btn-md">
-                    <i class="fa fa-plus-circle"></i> 购买接口
+                <a href="<?php echo site_url('admin/userpro/buy')?>" id="buy" class="btn btn-success btn-md">
+                    <i class="fa fa-plus-circle"></i>购买接口
                 </a>
             </div>
         </div>
@@ -36,12 +36,13 @@
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <input type="hidden" id="current">
+                        <input type="hidden" id="current" value="<?=$userid?>">
                                 <ul id="userlist" class="list-group list-group-unbordered">
                                     <?php foreach($users as $user):?>
-                                    <li class="list-group-item" id="<?=$user->id?>">
-                                        <b><?=$user->realname?></b>
-                                    </li>
+                                    <a href="<?php echo site_url('admin/userpro/index/').$user->id ?>">
+                                        <li class="list-group-item <?php if($user->id==$userid){echo 'uactive';}?>">
+                                    <b> <?=$user->realname?></b>
+                                    </li></a>
                                    <?php endforeach;?>
                         </ul>
                     </div>
@@ -62,17 +63,31 @@
                                 <tr>
                                     <th>接口名</th>
                                     <th>调用名</th>
-                                    <th>创建时间</th>
-                                    <th>近期登录</th>
+                                    <th>使用数</th>
+                                    <th>收费数</th>
+                                    <th>总数</th>
+                                    <th>购买时间</th>
+                                    <th>操作</th>
+                                    <th>禁用/启用</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php foreach($prolist as $product):?>
                                 <tr>
-                                    <td><a href="<?php echo site_url('admin/product/edit/').$product->id?>"> <?=$product->pro_name?></a></td>
-                                    <td><?=$product->api_name?></td>
-                                    <td><?=$product->create_time?></td>
-                                    <td><?=$product->update_time?></td>
+                                    <td><a href="<?php echo site_url('admin/product/edit/').$product['id']?>"> <?=$product['pro_name']?></a></td>
+                                    <td><?=$product['api_name']?></td>
+                                    <td><?=$product['used_count']?></td>
+                                    <td><?=$product['charge_count']?></td>
+                                    <td><?=$product['all_count']?></td>
+                                    <td><?=$product['create_time']?></td>
+                                    <td> <a href="<?php echo site_url('admin/userpro/recharge/').$product['id']?>" class="btn btn-success btn-md"> 续费</a></td>
+                                    <td>
+                                        <div class="checkbox checkbox-slider--b-flat checkbox-slider-md">
+                                            <label>
+                                                <input type="checkbox" value="<?=$product['id']?>" name="isenable" <?=$product['isable']?'checked':''; ?> ><span></span>
+                                            </label>
+                                        </div>
+                                    </td>
                                    </tr>
                                 <?php endforeach; ?>
                                 </tbody>
@@ -90,22 +105,24 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
 <?php $this->load->view('admin/layouts/footer.html'); ?>
 <style type="text/css">
     .uactive{background-color:#3c8dbc; color: #f4f4f4;}
+    .uactive a{color: #f4f4f4;}
     #userlist li{cursor: pointer;}
 </style>
+
 <script type="text/javascript">
- $(function () {
-    $("#userlist li").click(function () {
-        $("#current").val($(this).attr('id'));
-     $(this).addClass('uactive').siblings().removeClass('uactive');
+    $(function () {
+        $("input[name='isenable']").click(function () {
+            $.post("<?php echo site_url('admin/userpro/setstatus/')?>"+$(this).val(),function(data){
+                if(data){
+                    alert("操作成功");
+                } else{
+                    alert("您无此权限");
+                }
+            });
+        });
     });
 
-    $("#buy").click(function () {
-            if($("#current").val()=='')
-            {alert("请选择购买用户");return false;}
-        });
- });
 </script>

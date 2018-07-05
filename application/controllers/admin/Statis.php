@@ -47,7 +47,6 @@ class Statis extends MY_Controller {
         {
             $data['id']=$id;
             $this->statis_model->update($data);
-            $this->load->view('admin/source/add.html',$data);
             redirect('admin/statis');
         }
         else{

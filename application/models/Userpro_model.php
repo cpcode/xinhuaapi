@@ -8,9 +8,9 @@ public function add($post)
     $data = array(
         'user_id' => $post['user_id'],
         'pro_id' => $post['pro_id'],
-        'isable' => $post['isable'],
-        'used_count' => $post['used_count'],
-        'charge_count' => $post['charge_count'],
+        'isable' =>isset($post['isable'])?$post['isable']:1,
+        'used_count' => isset($post['used_count'])?$post['used_count']:0,
+        'charge_count' => isset($post['charge_count'])?$post['charge_count']:0,
         'all_count' => $post['all_count'],
         'create_time' => date('Y-m-d h:i:s'),
         'update_time' => date('Y-m-d h:i:s')
@@ -65,16 +65,20 @@ public function setstatus($id)
 
     //查询list data
     function querylist($sql){
-
         $result =array();
         $query = $this->db->query($sql);
-        if($query){
+       if($query){
             foreach($query->result_array() as $row){
                 $result[] = $row ;
             }
         }
-
         return $result ;
+    }
+    //修改数据
+    function update_data($sql){
+
+        $query = $this->db->query($sql);
+        return $this->db->affected_rows(); //返回影响的行数
     }
 }
 ?>

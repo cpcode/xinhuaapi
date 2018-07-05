@@ -14,6 +14,10 @@ class Login extends CI_Controller {
     }
 	public function index()
     {
+        $adminid= $this->session->adminid;
+        if($adminid){
+            redirect('admin/manager/index');
+        }else
         $this->load->view('admin/login.html');
     }
     //登录表单验证

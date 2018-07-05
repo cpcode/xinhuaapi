@@ -21,59 +21,81 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">添加新华数据接口</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <?php if(isset($alert)){?>
-                        <div class="alert alert-danger alert-dismissible" aria-hidden="true" id="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <p><?php echo $alert;?></p>
-
-                        </div><?php }?>
-                        <div class="row">
-                            <form class="form-horizontal" method="post" action="<?php echo site_url('admin/product/add'); ?>">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="pro_name" class="col-sm-2 control-label">接口名称</label>
-
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="pro_name" id="pro_name" required placeholder="接口名称">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="api_name" class="col-sm-2 control-label">api调用名</label>
-
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="api_name" id="api_name" required placeholder="api调用名">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="isable" class="col-sm-2 control-label">开启/禁用</label>
-                                        <div class="col-sm-10">
-                                            <div class="checkbox checkbox-slider--b-flat checkbox-slider-md">
-                                                <label>
-                                                    <input type="checkbox" value="1"  id="isable" name="isable" checked ><span></span>
-                                                </label>
-                                            </div>                                        </div>
-                                    </div>
-                                    <!-- /.box-body -->
-                                    <div class="box-footer" style="text-align: center;">
-                                        <button type="submit" class="btn btn-info">确定</button> &nbsp;&nbsp;
-                                        <button type="reset" class="btn btn-default">重置</button>
-                                    </div>
-                                    <!-- /.box-footer -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <!-- Profile Image -->
+                            <div class="box box-primary">
+                                <div class="box-body box-profile">
+                                    <ul  class="list-group list-group-unbordered"><li  class="list-group-item" ><h4>选择用户</h4> </li></ul>
+                                    <ul id="userlist" class="list-group list-group-unbordered">
+                                        <?php foreach($users as $user):?>
+                                        <li class="list-group-item" id="<?=$user->id?>">
+                                          <b><?=$user->realname?></b>
+                                        </li>
+                                        <?php endforeach;?>
+                                    </ul>
                                 </div>
-                            </form>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-9">
+                            <div class="col-md-6">
+                                <!-- general form elements -->
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">选择购买接口</h3>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <!-- form start -->
+                                    <form role="form"  method="post" action="<?php echo site_url('admin/userpro/store/'); ?>">
+                                        <div class="box-body">
+                                            <input type="hidden"  name="user_id" id="user_id" value="<?=isset($users[0])?$users[0]->id:''?>">
+                                            <div class="form-group">
+                                                <label for="pro_id">选择接口</label>
+                                                <select id="pro_id" name="pro_id"  class="form-control">
+                                                    <?php foreach($prolist as $product):?>
+                                                    <option value="<?=$product->id?>"><?=$product->pro_name?></option>
+                                                    <?php endforeach;?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="all_count">购买数量</label>
+                                                <input type="text" class="form-control" name="all_count" id="all_count" required value="" placeholder="购买数量">
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body -->
 
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
-                </div>
-            </div>
-        </div>
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn btn-primary">购买</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.box -->
+
+
+                            </div>
+                        </div></div></div></div></div>
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
 <?php $this->load->view('admin/layouts/footer.html'); ?>
+<style type="text/css">
+    .uactive{background-color:#3c8dbc; color: #f4f4f4;}
+    .uactive a{color: #f4f4f4;}
+    #userlist li{cursor: pointer;}
+</style>
+<script type="text/javascript">
+
+    $(function () {
+        $("#userlist li:first").addClass('uactive').siblings().removeClass('uactive');
+        $("#userlist li").click(function () {
+            $("#user_id").val($(this).attr('id'));
+            $(this).addClass('uactive').siblings().removeClass('uactive');
+        });
+
+    })
+</script>

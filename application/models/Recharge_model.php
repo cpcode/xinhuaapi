@@ -11,7 +11,6 @@ public function add($post)
         'count' => $post['count'],
         'create_time' => date('Y-m-d h:i:s'),
         'update_time' => date('Y-m-d h:i:s')
-
     );
     return $this->db->insert('recharge', $data);
 }
