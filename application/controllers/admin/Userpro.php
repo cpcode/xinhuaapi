@@ -49,7 +49,7 @@ class Userpro extends MY_Controller {
         $exist=  $this->userpro_model->query_one($str);
         if (count($exist))
         {
-            show("已经购买！续费即可再用",'admin/userpro/buy');
+             echo "已经购买！续费即可再用";
              exit();
         }
         else
@@ -62,7 +62,7 @@ class Userpro extends MY_Controller {
                $charge['api_upid']=$upid['id'];
                $charge['count']=$data['all_count'];
                $this->recharge_model->add($charge);
-               show("操作成功");
+                echo "操作成功";
                exit();
               }
         }
