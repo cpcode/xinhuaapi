@@ -26,7 +26,7 @@
             <div class="col-md-6">
             </div>
             <div class="col-md-6 text-right">
-                <a href="<?php echo site_url('admin/userpro/buy')?>" id="buy" class="btn btn-success btn-md">
+                <a href="<?php echo site_url('admin/userpro/buy/').$userid?>" id="buy" class="btn btn-success btn-md">
                     <i class="fa fa-plus-circle"></i>购买接口
                 </a>
             </div>
@@ -74,7 +74,7 @@
                                 <tbody>
                                 <?php foreach($prolist as $product):?>
                                 <tr>
-                                    <td><a href="<?php echo site_url('admin/product/edit/').$product['id']?>"> <?=$product['pro_name']?></a></td>
+                                    <td><b> <?=$product['pro_name']?></b> </td>
                                     <td><?=$product['api_name']?></td>
                                     <td><?=$product['used_count']?></td>
                                     <td><?=$product['charge_count']?></td>
@@ -105,7 +105,7 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<?php $this->load->view('admin/layouts/footer.html'); ?>
+<?php $this->load->view('admin/layouts/footer_model.html'); ?>
 <style type="text/css">
     .uactive{background-color:#3c8dbc; color: #f4f4f4;}
     .uactive a{color: #f4f4f4;}
@@ -116,11 +116,16 @@
     $(function () {
         $("input[name='isenable']").click(function () {
             $.post("<?php echo site_url('admin/userpro/setstatus/')?>"+$(this).val(),function(data){
-                if(data){
-                    alert("操作成功");
-                } else{
-                    alert("您无此权限");
-                }
+                if(data==true)$(".modal-body").html(" <p class=\"lead\">\n" +
+                    "                        <i class=\"fa fa-question-circle fa-lg\"></i>\n" +
+                    "                       操作成功\n" +
+                    "                    </p>");
+                else
+                    $(".modal-body").html(" <p class=\"lead\">\n" +
+                        "                        <i class=\"fa fa-question-circle fa-lg\"></i>\n" +
+                        "                       操作失败\n" +
+                        "                    </p>");
+                $("#modal-news").modal();
             });
         });
     });

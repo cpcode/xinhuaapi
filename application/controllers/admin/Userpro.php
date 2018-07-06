@@ -26,14 +26,15 @@ class Userpro extends MY_Controller {
     /**
      * 点击进入购买页面
      */
-    public function  buy()
+    public function  buy($id='')
     {
         $this->load->model('Product_model','product_model');
         $userlist=$this->user_model->getall();
         $data['users']=$userlist->result();
         $data['prolist']=$this->product_model->getall()->result();
-        $data['userid']=$data['users'][0]->id;
-        $this->load->view('admin/buy/add.html',$data);
+       if ($id=='') $data['userid']=$data['users'][0]->id;
+       else  $data['userid']=$id;
+       $this->load->view('admin/buy/add.html',$data);
     }
 
     /**
@@ -49,20 +50,19 @@ class Userpro extends MY_Controller {
         $exist=  $this->userpro_model->query_one($str);
         if (count($exist))
         {
-             echo "已经购买！续费即可再用";
-             exit();
+            showmessage("已经购买!续费即可再用",'admin/userpro/index/'.$data['user_id']);
+            exit();
         }
         else
         {
             $bool=$this->userpro_model->add($data);
            if ($bool)
            {
-               $upid=$this->userpro_model->query_one($str);
                $charge['api_userid']=$data['user_id'];
-               $charge['api_upid']=$upid['id'];
+               $charge['api_upid']=$data['pro_id'];
                $charge['count']=$data['all_count'];
                $this->recharge_model->add($charge);
-                echo "操作成功";
+               showmessage("操作成功",'admin/userpro/index/'.$data['user_id']);
                exit();
               }
         }
@@ -96,7 +96,8 @@ class Userpro extends MY_Controller {
            $time=date('Y-m-d h:i:s');
            $str="update api_userpro set all_count= all_count+".$data['count'].",update_time='".$time."' where id='".$data['api_upid']."'";
            $upid=$this->userpro_model->update_data($str);
-           show("操作成功",'admin/userpro/recharge/'.$id);
+         //  echo "操作成功";//
+           showmessage("操作成功",'admin/userpro/recharge/'.$id);
            exit();
         }
     }
@@ -117,6 +118,6 @@ class Userpro extends MY_Controller {
     public function setstatus($id)
     {
         $bool = $this->userpro_model->setstatus($id);
-        echo "1";
+        echo $bool;
     }
 }

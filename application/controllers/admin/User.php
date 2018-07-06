@@ -49,7 +49,7 @@ class User extends MY_Controller {
      public function setstatus($id)
      {
          $bool = $this->user_model->setstatus($id);
-         echo "1";
+         echo $bool;
      }
 
     /**

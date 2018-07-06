@@ -75,17 +75,22 @@
 </div>
 <!-- /.content-wrapper -->
 
-<?php $this->load->view('admin/layouts/footer.html'); ?>
+<?php $this->load->view('admin/layouts/footer_model.html'); ?>
 
 <script type="text/javascript">
     $(function () {
         $("input[name='isenable']").click(function () {
             $.post("<?php echo site_url('admin/user/setstatus/')?>"+$(this).val(),function(data){
-                if(data){
-                    alert("操作成功");
-                    } else{
-                    alert("您无此权限");
-                }
+                if(data==true)$(".modal-body").html(" <p class=\"lead\">\n" +
+                    "                        <i class=\"fa fa-question-circle fa-lg\"></i>\n" +
+                    "                       操作成功\n" +
+                    "                    </p>");
+               else
+                    $(".modal-body").html(" <p class=\"lead\">\n" +
+                        "                        <i class=\"fa fa-question-circle fa-lg\"></i>\n" +
+                        "                       操作失败\n" +
+                        "                    </p>");
+                $("#modal-news").modal();
             });
         });
     });

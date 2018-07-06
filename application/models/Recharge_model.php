@@ -7,7 +7,7 @@ public function add($post)
 {
     $data = array(
         'api_userid' => $post['api_userid'],
-        'api_upid' => $post['api_upid'],
+        'api_proid' => $post['api_proid'],
         'count' => $post['count'],
         'create_time' => date('Y-m-d h:i:s'),
         'update_time' => date('Y-m-d h:i:s')

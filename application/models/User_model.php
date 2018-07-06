@@ -16,9 +16,11 @@ public function add($post)
     );
     return $this->db->insert('user', $data);
 }
+/*获取uuid*/
 public  function  addkeys()
 {
-    return md5("ddd");
+    $data=$this->db->query("select replace(uuid(), '-', '') AS uuid")->row_array();
+    return $data['uuid'];
 }
 
 //获取所有用户

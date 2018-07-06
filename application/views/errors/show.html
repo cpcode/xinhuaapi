@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新华数据接口管理系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <meta http-equiv='Refresh' content='<?php echo  $timeout ;?>;URL=<?php echo site_url($url);?><?php echo $params ;?>'>
+    <link rel="stylesheet" href="<?php echo base_url('resource/adminlte/');?>bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="<?php echo base_url('resource/adminlte/');?>dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('resource/adminlte/');?>dist/css/titatoggle-dist-min.css">
+    <link rel="stylesheet" href="<?php echo base_url('resource/adminlte/');?>dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('resource/adminlte/');?>dist/css/dpl-min.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="<?php echo site_url('admin/index'); ?>" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>A</b>LT</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>新华</b>大数据</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                            <span class="hidden-xs"><?php echo $_SESSION['name']; ?></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="" class="btn btn-default btn-flat">修改密码</a>
+                                </div>
+                                <div class="pull-right">
+
+                                    <a href="<?php echo site_url('login/loginout'); ?>" class="btn btn-default btn-flat">退出登录</a>
+
+
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+<?php  include APPPATH.'/views/admin/layouts/left.html'; ?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+           温馨提示：
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="span10">
+                <div class="tips tips-large tips-success">
+                    <span class="x-icon x-icon-success"><i class="icon icon-ok icon-white"></i></span>
+                    <div class="tips-content">
+                        <h2><?php echo $message ;?></h2>
+                        <p class="auxiliary-text">
+                            页面将在 <span class="wait"><?php echo  $timeout ;?></span> 秒后自动关闭，如果不想等待请 <a href="<?php echo site_url($url);?><?php echo $params ;?>">点击</a>
+                        </p>
+                        <p>
+                            <!--
+                              <a class="page-action" data-type="setTitle" title="编辑用户个性化功能权限" href="userFunc.html">编辑用户个性化功能权限</a>
+                              <a class="page-action" data-type="setTitle" title="配置用户数据权限" href="userData.html">配置用户数据权限</a>
+                              <a class="page-action" data-type="setTitle" title="返回用户管理" href="userManage.html">返回用户管理</a>
+                            -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<?php  include APPPATH.'/views/admin/layouts/footer.html'; ?>

@@ -8,7 +8,6 @@ class  Statis_model extends CI_Model
         $data = array(
             'all_name' => $post['all_name'],
             'api_name' => $post['api_name'],
-            'count' => $post['count'],
             'create_time' => date('Y-m-d h:i:s'),
             'update_time' => date('Y-m-d h:i:s')
         );

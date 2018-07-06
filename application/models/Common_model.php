@@ -60,7 +60,6 @@ class Common_model  extends CI_Model {
 	}
 	//修改数据
 	function update_data($sql){
-	
 		$query = $this->db->query($sql);
 		return $this->db->affected_rows(); //返回影响的行数
 	}

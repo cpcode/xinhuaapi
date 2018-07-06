@@ -29,7 +29,7 @@
                                     <ul  class="list-group list-group-unbordered"><li  class="list-group-item" ><h4>选择用户</h4> </li></ul>
                                     <ul id="userlist" class="list-group list-group-unbordered">
                                         <?php foreach($users as $user):?>
-                                        <li class="list-group-item" id="<?=$user->id?>">
+                                        <li class="list-group-item <?php if($user->id==$userid){echo 'uactive';}?>" id="<?=$user->id?>">
                                           <b><?=$user->realname?></b>
                                         </li>
                                         <?php endforeach;?>
@@ -51,7 +51,7 @@
                                     <!-- form start -->
                                     <form role="form"  method="post" action="<?php echo site_url('admin/userpro/store/'); ?>">
                                         <div class="box-body">
-                                            <input type="hidden"  name="user_id" id="user_id" value="<?=isset($users[0])?$users[0]->id:''?>">
+                                            <input type="hidden"  name="user_id" id="user_id" value="<?=$userid?>">
                                             <div class="form-group">
                                                 <label for="pro_id">选择接口</label>
                                                 <select id="pro_id" name="pro_id"  class="form-control">
@@ -91,7 +91,6 @@
 <script type="text/javascript">
 
     $(function () {
-        $("#userlist li:first").addClass('uactive').siblings().removeClass('uactive');
         $("#userlist li").click(function () {
             $("#user_id").val($(this).attr('id'));
             $(this).addClass('uactive').siblings().removeClass('uactive');

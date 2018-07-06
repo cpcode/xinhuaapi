@@ -65,7 +65,7 @@ class Product extends MY_Controller {
     public function setstatus($id)
     {
         $bool = $this->product_model->setstatus($id);
-        echo "1";
+        echo $bool;
     }
 
 }

@@ -29,8 +29,12 @@ class Statis extends MY_Controller {
         $data = $this->input->post();
         if (count($data)>0)
         {
-            $this->statis_model->add($data);
-            redirect('admin/statis');
+            $bool= $this->statis_model->add($data);
+            if ($bool)
+              showmessage('操作成功','admin/statis');
+            else
+                showmessage('操作失败','admin/statis/add',1);
+            exit();
         }
         else{
             $this->load->view('admin/source/add.html');
@@ -60,7 +64,7 @@ class Statis extends MY_Controller {
     public  function delete($id)
     {
         $this->statis_model->delete($id);
-        redirect('admin/statis');
+        showmessage('操作成功','admin/statis');
     }
 
 }
