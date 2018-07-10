@@ -16,8 +16,9 @@ public function add($post)
 }
 
 //获取所有接口
-public function getall()
+public function getall($limit=null,$offset=null)
 {
+    if (!is_null($limit)&&!is_null($offset)) return $this->db->get('product',$limit,$offset);
     return $this->db->get('product');
 }
 
@@ -52,6 +53,22 @@ public function setstatus($id)
         );
         $this->db->where('id',$post['id']);
         return $this->db->update('product', $data);
+    }
+    //查询返回的结果
+    function query_count($strwhere=''){
+        $sql="select count(1) from api_product";
+        if ($strwhere!='')$sql=$sql.$strwhere;
+        $query = $this->db->query($sql);
+        $num_array = $query->result_array();
+        $num = 0 ;
+        if(isset($num_array[0]) && !empty($num_array[0])){
+            foreach ($num_array[0] as $k=>$v){
+                $num = $v ;
+                break ;
+            }
+        }
+        return $num ;
+
     }
 }
 ?>

@@ -6,9 +6,13 @@ class  Manager_model extends CI_Model
 public function add($post)
 {
     $data = array(
+
+        'username' => $post['username'],
         'password' => md5($post['password']),
-        'username' => $post['name'],
         'realname' => $post['realname'],
+        'group_id' => $post['group_id'],
+        'dtime' => date('Y-m-d h:i:s'),
+        'lastlogintime' => date('Y-m-d h:i:s')
     );
     return $this->db->insert('manager', $data);
 }

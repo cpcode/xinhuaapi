@@ -7,12 +7,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            新华数据接口管理
-            <small>新华数据接口列表</small>
+            后台用户管理
+            <small>用户列表</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 接口管理</a></li>
-            <li class="active">新华数据接口</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> 用户管理</a></li>
+            <li class="active">后台用户管理</li>
         </ol>
     </section>
 
@@ -22,46 +22,47 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">新华数据接口列表</h3>
+                        <h3 class="box-title">后台用户管理</h3>
                     </div><!-- /.box-header -->
                     <div class="row page-title-row" style="margin:5px;">
                         <div class="col-md-6">
-                            <p style="color: red;font-size: 12px">温馨提示：点击接口名链接可以编辑接口</p>
+                            <p style="color: red;font-size: 12px">温馨提示：点击用户名链接可以编辑用户</p>
                         </div>
                         <div class="col-md-6 text-right">
-                            <a href="<?php echo site_url('/admin/product/add'); ?>" class="btn btn-success btn-md">
-                                <i class="fa fa-plus-circle"></i> 添加接口
+                            <a href="<?php echo site_url('/admin/manager/add'); ?>" class="btn btn-success btn-md">
+                                <i class="fa fa-plus-circle"></i> 添加账号
                             </a>
                         </div>
                     </div>
                     <div class="box-body">
-                        <div class="row">
-                            <table id="example2" class="table table-bordered table-hover">
+                        <div class="row"><table id="example2" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>接口名</th>
-                                <th>调用名</th>
+                                <th>用户名</th>
+                                <th>真实姓名</th>
+                                <th>用户组</th>
                                 <th>创建时间</th>
                                 <th>近期登录</th>
                                 <th>开启/禁用</th>
-                            </tr>
-                            </thead>
+                            </tr></thead>
                             <tbody>
-                            <?php foreach($prolist as $product):?>
+                            <?php foreach($users as $user):?>
                             <tr>
-                                <td><a href="<?php echo site_url('admin/product/edit/').$product->id?>"> <?=$product->pro_name?></a></td>
-                                <td><?=$product->api_name?></td>
-                                <td><?=$product->create_time?></td>
-                                <td><?=$product->update_time?></td>
+                                <td><a href="<?php echo site_url('admin/manager/edit/').$user['id']?>"> <?=$user['username']?></a></td>
+                                <td><?=$user['realname']?></td>
+                                <td><?=$user['groupname']?></td>
+                                <td><?=$user['dtime']?></td>
+                                <td><?=$user['lastlogintime']?></td>
                                 <td>
                                     <div class="checkbox checkbox-slider--b-flat checkbox-slider-md">
                                         <label>
-                                            <input type="checkbox" value="<?=$product->id?>" name="isenable" <?=$product->isable?'checked':''; ?> ><span></span>
+                                            <input type="checkbox" value="<?=$user['id']?>" name="isenable" <?=$user['isable']?'checked':''; ?> ><span></span>
                                         </label>
                                     </div>
                                 </td>
-                                <!-- <td>  <a style="margin:3px;" href="#" attr="<?=$product->id?>" class="delBtn X-Small btn-xs text-danger "><i class="fa fa-times-circle-o"></i> 删除</a></td>
-                            --> </tr>
+                               <!-- <td>
+                               <a style="margin:3px;" href="#" attr="<?=$user->id?>" class="delBtn X-Small btn-xs text-danger "><i class="fa fa-times-circle-o"></i> 删除</a></td>
+                           --> </tr>
                             <?php endforeach; ?>
                             </tbody>
                         </table></div>
@@ -71,9 +72,9 @@
                             </div></div>
 
                             <div class="col-sm-7">
-                                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                                    <?=$page?>
-                                </div></div></div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                          <?=$page?>
+                          </div></div></div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>
@@ -88,7 +89,8 @@
 <script type="text/javascript">
     $(function () {
         $("input[name='isenable']").click(function () {
-            $.post("<?php echo site_url('admin/product/setstatus/')?>"+$(this).val(),function(data){
+            $.post("<?php echo site_url('admin/manager/setstatus/')?>"+$(this).val(),function(data){
+
                 if(data==true)$(".modal-body").html(" <p class=\"lead\">\n" +
                     "                        <i class=\"fa fa-question-circle fa-lg\"></i>\n" +
                     "                       操作成功\n" +

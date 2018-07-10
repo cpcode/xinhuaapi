@@ -23,11 +23,12 @@ public  function  addkeys()
     return $data['uuid'];
 }
 
-//获取所有用户
-public function getall()
-{
-    return $this->db->get('user');
-}
+//获取所有用户 //获取所有接口
+    public function getall($limit=null,$offset=null)
+    {
+        if (!is_null($limit)&&!is_null($offset)) return $this->db->get('user',$limit,$offset);
+        return $this->db->get('user');
+    }
 
 //根据id获取用户
 public function getsta($id)
@@ -75,7 +76,24 @@ public function setstatus($id)
     public function replacelogtime($id){
         $time = date("Y-m-d h:i:s",time());
         $this->db->where('id', $id);
-        $this->db->update('manager', array('update_time'=>$time));
+        $this->db->update('user', array('update_time'=>$time));
+    }
+
+    //查询返回的结果
+    function query_count($strwhere=''){
+        $sql="select count(1) from api_user";
+        if ($strwhere!='')$sql=$sql.$strwhere;
+        $query = $this->db->query($sql);
+        $num_array = $query->result_array();
+        $num = 0 ;
+        if(isset($num_array[0]) && !empty($num_array[0])){
+            foreach ($num_array[0] as $k=>$v){
+                $num = $v ;
+                break ;
+            }
+        }
+        return $num ;
+
     }
 }
 ?>

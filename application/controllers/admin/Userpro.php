@@ -14,12 +14,21 @@ class Userpro extends MY_Controller {
     /**
      * 获取已有的接口列表
      */
-	public function index($id='')
+	public function index($id='',$page='')
     {
+        $page_num=20;
+        if ($page=='')$page=0;
         $userlist=$this->user_model->getall();
         $data['users']=$userlist->result();
-         if ($id=='') $id=$data['users'][0]->id;
-        $data['prolist']=$this->userpro($id);
+        if ($id=='') $id=$data['users'][0]->id;
+        $this->load->model('Common_model','common_model');
+        $sql='select a.*,b.pro_name,b.api_name,b.isable as pro_isable FROM api_userpro a LEFT JOIN api_product b ON a.pro_id=b.id where user_id='.$id;
+        $data['count']=$this->common_model->query_count('select count(1) FROM api_userpro a LEFT JOIN api_product b ON a.pro_id=b.id where user_id='.$id);
+        $sql=$sql.' limit '.($page)*$page_num.','.$page_num;
+
+        $data['prolist']=$this->userpro_model->querylist($sql);
+        $this->load->library('common_page');
+        $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/admin/userpro/index/'.$id);
         $data['userid']=$id;
         $this->load->view('admin/buy/list.html',$data);
     }
@@ -105,9 +114,12 @@ class Userpro extends MY_Controller {
      * @param $id 用户id
      * @return 返回该用户所购买的所有接口
      */
-    public function userpro($id)
+    public function userpro($id,$limit='')
     {
         $sql='select a.*,b.pro_name,b.api_name,b.isable as pro_isable FROM api_userpro a LEFT JOIN api_product b ON a.pro_id=b.id where user_id='.$id;
+        $this->userpro_model->querylist($sql);
+        if ($limit!='')
+
         return  $this->userpro_model->querylist($sql);
     }
 

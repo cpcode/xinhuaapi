@@ -13,11 +13,15 @@ class Statis extends MY_Controller {
     /**
      * 获取已有的接口列表
      */
-    public function index()
+    public function index($page='')
     {
-        $query=$this->statis_model->getall();
+        $page_num=15;
+        if ($page=='')$page=0;
+        $data['count']=$this->statis_model->query_count();
+        $query=$this->statis_model->getall($page_num,($page)*$page_num);
+        $this->load->library('common_page');
+        $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/admin/statis/index');
         $data['statislist']=$query->result();
-        $data['num'] = $query->num_rows();
         $this->load->view('admin/source/list.html',$data);
     }
 

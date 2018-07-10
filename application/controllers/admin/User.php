@@ -13,11 +13,15 @@ class User extends MY_Controller {
     /**
      * 企业用户列表
      */
-	public function index()
+	public function index($page='')
     {
-        $query=$this->user_model->getall();
+        $page_num=1;
+        if ($page=='')$page=0;
+        $data['count']=$this->user_model->query_count();
+        $query=$this->user_model->getall($page_num,($page)*$page_num);
+        $this->load->library('common_page');
+        $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/admin/user/index');
         $data['users']=$query->result();
-        $data['num'] = $query->num_rows();
         $this->load->view('admin/users/list.html',$data);
     }
     /**

@@ -13,11 +13,17 @@ class Product extends MY_Controller {
     /**
      * 获取已有的接口列表
      */
-	public function index()
+	public function index($page='')
     {
-        $query=$this->product_model->getall();
+        $page_num=15;
+
+        if ($page=='')$page=0;
+
+        $data['count']=$this->product_model->query_count();
+        $query=$this->product_model->getall($page_num,($page)*$page_num);
         $data['prolist']=$query->result();
-        $data['num'] = $query->num_rows();
+        $this->load->library('common_page');
+        $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/admin/product/index');
         $this->load->view('admin/product/list.html',$data);
     }
 

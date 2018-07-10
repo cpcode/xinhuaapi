@@ -13,10 +13,10 @@ class  Statis_model extends CI_Model
         );
         return $this->db->insert('statis', $data);
     }
-
-//获取所有接口
-    public function getall()
+    //获取所有接口
+    public function getall($limit=null,$offset=null)
     {
+        if (!is_null($limit)&&!is_null($offset)) return $this->db->get('statis',$limit,$offset);
         return $this->db->get('statis');
     }
 
@@ -46,6 +46,23 @@ class  Statis_model extends CI_Model
 
         $this->db->where('id',$id);
         return $this->db->delete('statis');
+    }
+
+    //查询返回的结果
+    function query_count($strwhere=''){
+        $sql="select count(1) from api_statis";
+        if ($strwhere!='')$sql=$sql.$strwhere;
+        $query = $this->db->query($sql);
+        $num_array = $query->result_array();
+        $num = 0 ;
+        if(isset($num_array[0]) && !empty($num_array[0])){
+            foreach ($num_array[0] as $k=>$v){
+                $num = $v ;
+                break ;
+            }
+        }
+        return $num ;
+
     }
 }
 ?>

@@ -13,7 +13,7 @@ class Common_model  extends CI_Model {
 	
 	//插入一条数据
 	function insert_one($table,$data){
-		$this->db->insert($table,$data) ;
+		$this->db->insert($table,$data);
 		return array(
 			'affect_num'=>$this->db->affected_rows() ,
 			'insert_id'=>$this->db->insert_id(),
