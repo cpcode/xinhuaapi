@@ -15,7 +15,7 @@ class User extends MY_Controller {
      */
 	public function index($page='')
     {
-        $page_num=1;
+        $page_num=15;
         if ($page=='')$page=0;
         $data['count']=$this->user_model->query_count();
         $query=$this->user_model->getall($page_num,($page)*$page_num);

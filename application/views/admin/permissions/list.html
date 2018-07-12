@@ -1,0 +1,103 @@
+<?php $this->load->view('admin/layouts/header.html'); ?>
+
+<?php $this->load->view('admin/layouts/left.html'); ?>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            系统设置
+            <small>模块管理</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 系统设置</a></li>
+            <li class="active">模块管理</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">模块管理</h3>
+                    </div><!-- /.box-header -->
+                    <div class="row page-title-row" style="margin:5px;">
+                        <div class="col-md-6">
+                            <p style="color: red;font-size: 12px">温馨提示：点击用户名链接可以编辑</p>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a href="<?php echo site_url('/admin/permissions/add'); ?>" class="btn btn-success btn-md">
+                                <i class="fa fa-plus-circle"></i> 添加模块
+                            </a>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row"><table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>链接</th>
+                                <th>描述</th>
+                                <th>创建时间</th>
+                                <th>开启/禁用</th>
+                            </tr></thead>
+                            <tbody>
+                            <?php foreach($permissions as $permission):?>
+                            <tr>
+                                <td><a href="<?php echo site_url('admin/permission/edit/').$permission->id?>"> <?=$permission->name?></a></td>
+                                <td><?=$permission->link?></td>
+                                <td><?=$permission->description?></td>
+                                <td><?=$permission->dtime?></td>
+                                <td>
+                                    <div class="checkbox checkbox-slider--b-flat checkbox-slider-md">
+                                        <label>
+                                            <input type="checkbox" value="<?=$permission->id?>" name="isenable" <?=$permission->isable?'checked':''; ?> ><span></span>
+                                        </label>
+                                    </div>
+                                </td>
+                          </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table></div>
+                        <div class="row"><div class="col-sm-5">
+                            <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+
+                            </div></div>
+
+                            <div class="col-sm-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                          <?=$page?>
+                          </div></div></div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<?php $this->load->view('admin/layouts/footer_model.html'); ?>
+
+<script type="text/javascript">
+    $(function () {
+        $("input[name='isenable']").click(function () {
+            $.post("<?php echo site_url('admin/manager/setstatus/')?>"+$(this).val(),function(data){
+
+                if(data==true)$(".modal-body").html(" <p class=\"lead\">\n" +
+                    "                        <i class=\"fa fa-question-circle fa-lg\"></i>\n" +
+                    "                       操作成功\n" +
+                    "                    </p>");
+               else
+                    $(".modal-body").html(" <p class=\"lead\">\n" +
+                        "                        <i class=\"fa fa-question-circle fa-lg\"></i>\n" +
+                        "                       操作失败\n" +
+                        "                    </p>");
+                $("#modal-news").modal();
+            });
+        });
+    });
+
+</script>

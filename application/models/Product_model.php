@@ -68,7 +68,6 @@ public function setstatus($id)
             }
         }
         return $num ;
-
     }
 }
 ?>

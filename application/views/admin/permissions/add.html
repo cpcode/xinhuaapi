@@ -7,12 +7,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            企业用户管理
-            <small>用户添加</small>
+            系统设置
+            <small>模块管理</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 用户管理</a></li>
-            <li class="active">企业用户管理</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> 系统设置</a></li>
+            <li class="active">模块管理</li>
         </ol>
     </section>
 
@@ -22,7 +22,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">添加企业用户</h3>
+                        <h3 class="box-title">模块管理</h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <?php if(isset($alert)){?>
@@ -32,35 +32,34 @@
 
                         </div><?php }?>
                         <div class="row">
-                            <form class="form-horizontal" method="post" action="<?php echo site_url('admin/user/add'); ?>">
+                            <form class="form-horizontal" method="post" action="<?php echo site_url('admin/permissions/add'); ?>">
+                                <input id="pid" value="-1" type="hidden">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label">账号</label>
-
+                                        <label for="name" class="col-sm-2 control-label">名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="username" id="username" required placeholder="账号">
+                                            <input type="text" class="form-control" required name="name" id="name" placeholder="账号">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="realname" class="col-sm-2 control-label">企业全称</label>
+                                        <label for="link" class="col-sm-2 control-label">链接</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="realname" id="realname" required placeholder="名称">
+                                            <input type="text" class="form-control" name="link" id="link" placeholder="名称">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="password" class="col-sm-2 control-label">密码</label>
+                                        <label for="icon" class="col-sm-2 control-label">图标</label>
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" name="password" id="password" required placeholder="密码">
+                                            <input type="password" class="form-control" name="icon" id="icon" placeholder="密码">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="confirmpassword" class="col-sm-2 control-label">确认密码</label>
+                                        <label for="description" class="col-sm-2 control-label">备注</label>
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" required placeholder="确认密码">
+                                            <input type="password" class="form-control" name="description" id="description" placeholder="密码">
                                         </div>
                                     </div>
-
                                 <!-- /.box-body -->
                                 <div class="box-footer" style="text-align: center;">
                                     <button type="submit" class="btn btn-info">确定</button> &nbsp;&nbsp;

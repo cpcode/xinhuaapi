@@ -16,7 +16,7 @@ class Manager extends MY_Controller {
      */
 	public function index($page='')
     {
-        $page_num=1;
+        $page_num=15;
         if ($page=='')$page=0;
         $data['count']=$this->common_model->query_count("select count(1) from api_manager a left join api_group b on a.group_id=b.id");
         $sql='select a.*,b.groupname from api_manager a left join api_group b on a.group_id=b.id';
