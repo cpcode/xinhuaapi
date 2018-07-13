@@ -37,7 +37,7 @@ class Product extends MY_Controller {
         if (count($data)>0)
         {
             $this->product_model->add($data);
-           echo  "操作成功";
+            showmessage("操作成功",'admin/product/index');  ;
             exit();
         }
         else{

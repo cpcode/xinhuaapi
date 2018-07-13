@@ -59,7 +59,7 @@ class Userpro extends MY_Controller {
         $exist=  $this->userpro_model->query_one($str);
         if (count($exist))
         {
-            showmessage("已经购买!续费即可再用",'admin/userpro/index/'.$data['user_id']);
+            showmessage("已经购买!续费即可再用",'admin/userpro/index/'.$data['user_id'],3,1);
             exit();
         }
         else

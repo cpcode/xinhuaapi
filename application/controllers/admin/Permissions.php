@@ -13,7 +13,7 @@ class Permissions extends MY_Controller{
     /**
      * @param string $page
      */
-    public function index($page='')
+    public function index($page='',$pid='')
     {
         $page_num=15;
         if ($page=='')$page=0;
@@ -41,6 +41,15 @@ class Permissions extends MY_Controller{
         else{
             $this->load->view('admin/permissions/add.html',$data);
         }
+    }
+
+    /**
+     * 编辑系统模块
+     */
+    public  function  edit($id)
+    {
+            $data['permission']=$this->permissions_model->getsta($id);
+            $this->load->view('admin/permissions/edit.html',$data);
     }
 
 
