@@ -10,19 +10,25 @@ public function add($post)
         'password' => md5($post['password']),
         'realname' => $post['realname'],
         'appkey' => $this->addkeys(),
+        'pid'=>$post['pid'],
         'create_time' => date('Y-m-d h:i:s'),
         'update_time' => date('Y-m-d h:i:s')
 
     );
     return $this->db->insert('user', $data);
 }
+
 /*获取uuid*/
 public  function  addkeys()
 {
     $data=$this->db->query("select replace(uuid(), '-', '') AS uuid")->row_array();
     return $data['uuid'];
 }
-
+    /**/
+    public  function  getlist($where=null,$limit=null,$offset=null)
+    {
+         return $this->db->get_where('user',$where,$limit,$offset);
+    }
 //获取所有用户 //获取所有接口
     public function getall($limit=null,$offset=null)
     {
@@ -89,11 +95,10 @@ public function setstatus($id)
         if(isset($num_array[0]) && !empty($num_array[0])){
             foreach ($num_array[0] as $k=>$v){
                 $num = $v ;
-                break ;
+                break;
             }
         }
         return $num ;
-
     }
 }
 ?>

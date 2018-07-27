@@ -1,0 +1,92 @@
+<?php $this->load->view('admin/layouts/header.html'); ?>
+
+<?php $this->load->view('admin/layouts/left.html'); ?>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            文件管理
+            <small>文件列表</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 文件管理</a></li>
+            <li class="active">文件列表</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">文件管理</h3>
+                    </div><!-- /.box-header -->
+                    <script src="<?php echo base_url('resource/web/js/jquery.uploadify.js'); ?>" type="text/javascript"></script>
+                    <link rel="stylesheet" type="text/css" href="<?php echo base_url('resource/web/css/uploadify.css'); ?>">
+                    <div class="box-body">
+                        <div class="row">
+                            <form class="form-horizontal" onsubmit="return validate();" method="post" action="<?php echo  site_url('admin/file/store/').$file->id; ?>">
+                                <input type="hidden" value="" id="download_url" name="download_url">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name" class="col-sm-2 control-label">文件名</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" readonly name="name" id="name"  value="<?=$file->name?>"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="upload" class="col-sm-2 control-label">上传文件</label>
+                                        <div class="col-sm-10">
+                                            <input type="file" class="form-control" name="upload" id="upload" multiple="true"></div>
+                                        <div id="queue"></div>
+                                    </div>
+                                    <div class="box-footer" style="text-align: center;">
+                                        <button type="submit" class="btn btn-info">保存</button> &nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </form></div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<?php $this->load->view('admin/layouts/footer.html'); ?>
+
+<<?php $timestamp = time(); $swf=base_url('resource/web/images/uploadify.swf'); $uploadurl=base_url("web/file/uploadify");?>
+<script type="text/javascript">
+    $(function() {
+        $('#upload').uploadify({
+            'formData'     : {
+                'timestamp' : '<?php echo $timestamp;?>',
+                'token'     : '<?php echo md5("unique_salt" . $timestamp);?>',
+                'folder': '<?php echo $this->session->uid?>'
+            },
+            'buttonText':'浏  览',
+            'swf'      : '<?php echo $swf;?>',
+            'uploader' : '<?php echo $uploadurl;?>',
+            'fileSizeLimit' : 0,
+            'fileTypeExts': '*.txt; *.doc; *.xml; *.docx',
+            'onUploadSuccess': function (file, data,response) {
+                $("#download_url").val(data);//file.name
+            },
+            'onUploadError':   function (event, queueId, fileObj, errorObj) {
+                alert("error");
+            }
+        });
+    });
+    function validate() {
+        if ($("#upload_url").val()=='')
+        {
+            alert('请选择上传文件');
+            $("#alert").hide();
+            return false;
+        }
+        return true;
+    }
+</script>

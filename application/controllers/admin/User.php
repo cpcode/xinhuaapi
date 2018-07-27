@@ -10,6 +10,7 @@ class User extends MY_Controller {
         $this->load->library('form_validation');
     }
 
+
     /**
      * 企业用户列表
      */
@@ -42,7 +43,8 @@ class User extends MY_Controller {
           redirect('admin/user');
         }
         else{
-            $this->load->view('admin/users/add.html');
+            $data['ulist']=$this->user_model->getlist(array('pid'=>'-1'))->result();
+            $this->load->view('admin/users/add.html',$data);
         }
     }
 
@@ -74,15 +76,14 @@ class User extends MY_Controller {
             if (!isset($data['isable'])) $data['isable']=0;
             $data['id']=$id;
             if ($data['password']!='')$data['password']=md5($data['password']);
-           $data['user'] = $this->user_model->update($data);
-          redirect('/admin/user');
+            $data['user'] = $this->user_model->update($data);
+            redirect('/admin/user');
         }
         else
         {
             $data['user'] = $this->user_model->getsta($id);
+            $data['ulist']=$this->user_model->getlist(array('pid'=>'-1'))->result();
             $this->load->view('admin/users/edit.html',$data);
-
-
         }
 
     }

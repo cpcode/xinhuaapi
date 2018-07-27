@@ -18,6 +18,7 @@ public function add($post)
 //获取所有充值记录
 public function getall()
 {
+    $this->db->order_by('id','desc');
     return $this->db->get('recharge');
 }
 

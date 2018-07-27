@@ -1,0 +1,53 @@
+<?php $this->load->view('web/layouts/header.html'); ?>
+<div class="welcome-container ng-scope" id="js-home-welcome" ng-controller="WelcomeCtrl">
+    <div class="welcome-container">
+        <div class="panel we7-panel account-stat">
+            <div class="panel-heading">
+                <div class="row page-title-row">
+                    <div class="col-md-6">
+                        已上传列表                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="<?php echo site_url('web/file/upload'); ?>" class="btn btn-success btn-md">
+                            <i class="fa fa-plus-circle"></i> 文件上传
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body we7-padding-vertical">
+                <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                    <thead>
+                    <tr role="row">
+                        <th>已上传文件</th>
+                        <th>处理进度</th>
+                        <th>反馈文件</th>
+                        <th>操作</th>
+                    </thead>
+                    <tbody>
+                    <?php foreach($list as $file):?>
+                    <tr role="row" class="odd">
+                        <td class="sorting_1"> <a href="<?php echo base_url('web/file/uploadfile/'.$file->id);?>"><?=$file->name?> </a> </td>
+                        <td><?php
+                         switch($file->user_state){
+                            case 0:echo '已提交';break;
+                            case 1:echo '审核中';break;
+                            default:echo '无相关记录';break;
+                            } ?> </td>
+                        <td><?=is_null($file->download_url)?"无": $file->download_url?></td>
+                        <td><a class="btn btn-success btn-md">编辑</a></td>
+                    </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+        </div>
+            <div class="row"><div class="col-sm-5">
+                <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+
+                </div></div>
+
+                <div class="col-sm-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                        <?=$page?>
+                    </div></div></div>
+        </div><!-- /.box-body -->
+<?php $this->load->view('web/layouts/footer.html'); ?>

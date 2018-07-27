@@ -1,0 +1,75 @@
+<?php $this->load->view('web/layouts/header.html'); ?>
+<div class="welcome-container ng-scope" id="js-home-welcome" ng-controller="WelcomeCtrl">
+    <div class="welcome-container">
+        <div class="panel we7-panel account-stat">
+            <div class="panel-heading">
+                <div class="row page-title-row">
+                    <div class="col-md-6">
+                             身份验证文件上传
+                    </div>
+                </div>
+            </div>
+            <?php if(isset($alert)&&$alert!=''){?>
+            <div class="alert alert-success alert-dismissible" aria-hidden="true" id="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <p><?php echo $alert;?></p>
+
+            </div><?php }?>
+            <script src="<?php echo base_url('resource/web/js/jquery.uploadify.js'); ?>" type="text/javascript"></script>
+            <link rel="stylesheet" type="text/css" href="<?php echo base_url('resource/web/css/uploadify.css'); ?>">
+            <div class="panel-body we7-padding-vertical">
+                <form class="form-horizontal" onsubmit="return validate();" method="post" action="<?php echo  site_url('web/file/store/'); ?>">
+                    <input type="hidden" value="" id="upload_url" name="upload_url">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">文件名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="name" id="name" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="upload_url" class="col-sm-2 control-label">上传文件</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" name="upload" id="upload" multiple="true"></div>
+                            <div id="queue"></div>
+                        </div>
+                        <div class="box-footer" style="text-align: center;">
+                            <button type="submit" class="btn btn-info">保存</button> &nbsp;&nbsp;
+                        </div>
+                    </div>
+                </form>
+            </div>     </div>     </div>     </div>
+            <?php $this->load->view('web/layouts/footer.html'); ?>
+            <?php $timestamp = time(); $swf=base_url('resource/web/images/uploadify.swf'); $uploadurl=base_url("web/file/uploadify");?>
+            <script type="text/javascript">
+                $(function() {
+                    $('#upload').uploadify({
+                        'formData'     : {
+                            'timestamp' : '<?php echo $timestamp;?>',
+                            'token'     : '<?php echo md5("unique_salt" . $timestamp);?>',
+                            'folder': '<?php echo $this->session->uid?>'
+                        },
+                        'buttonText':'浏  览',
+                        'swf'      : '<?php echo $swf;?>',
+                        'uploader' : '<?php echo $uploadurl;?>',
+                        'fileSizeLimit' : 0,
+                        'fileTypeExts': '*.txt; *.doc; *.xml; *.docx',
+                        'onUploadSuccess': function (file, data,response) {
+                            $("#upload_url").val(data);//file.name
+                            if ($("#name").val()=="")
+                                $("#name").val(file.name);
+                            },
+                        'onUploadError':   function (event, queueId, fileObj, errorObj) {
+                            alert("error");
+                        }
+                    });
+                });
+                function validate() {
+                    if ($("#upload_url").val()=='')
+                    {
+                        alert('请选择上传文件');
+                        $("#alert").hide();
+                          return false;
+                    }
+                    return true;
+                }
+            </script>

@@ -18,6 +18,7 @@ public function add($post)
 //获取所有接口
 public function getall($limit=null,$offset=null)
 {
+    $this->db->order_by('id','desc');
     if (!is_null($limit)&&!is_null($offset)) return $this->db->get('product',$limit,$offset);
     return $this->db->get('product');
 }
