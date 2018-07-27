@@ -13,7 +13,7 @@ class  File_model extends CI_Model
             'upload_time' =>  isset($post['upload_url'])?date('Y-m-d h:i:s'):null,
             'download_time' =>   isset($post['download_url'])?date('Y-m-d h:i:s'):null,
             'admin_state'=>isset($post['admin_state'])?$post['admin_state']:-1,
-            'user_state'=>isset($post['user_state'])?$post['user_state']:null,
+            'user_state'=>isset($post['user_state'])?$post['user_state']:null
         );
         return $this->db->insert('file', $data);
     }
@@ -40,14 +40,13 @@ class  File_model extends CI_Model
     //更新接口
     public function update($post){
         $data = array(
-            'upload_url' => isset($post['upload_url'])?$post['upload_url']:null,
-            'download_url' => isset($post['download_url'])?$post['download_url']:null,
-            'upload_time' =>  isset($post['upload_url'])?date('Y-m-d h:i:s'):null,
-            'download_time' =>   isset($post['download_url'])?date('Y-m-d h:i:s'):null,
-            'admin_state'=>isset($post['admin_state'])?$post['admin_state']:-1,
-            'user_state'=>isset($post['user_state'])?$post['user_state']:null,
-
+            'download_time' =>   isset($post['download_url'])?date('Y-m-d h:i:s'):null
         );
+        if (isset($post['upload_url']))$data['upload_url']=$post['upload_url'];
+        if (isset($post['download_url']))$data['download_url']=$post['download_url'];
+        if (isset($post['upload_time']))$data['upload_time']=$post['upload_time'];
+        if (isset($post['user_state']))$data['user_state']=$post['user_state'];
+        if (isset($post['admin_state']))$data['admin_state']=$post['admin_state'];
         $this->db->where('id',$post['id']);
         return $this->db->update('file', $data);
     }

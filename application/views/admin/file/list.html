@@ -44,6 +44,7 @@
                          switch($file->user_state){
                                         case 0:echo '已提交';break;
                                         case 1:echo '审核中';break;
+                                        case 2:echo '审核完成';break;
                                         default:echo '无相关记录';break;
                                         } ?> </td>
                                     <td><?=is_null($file->download_url)?"无": $file->download_url?></td>

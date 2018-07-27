@@ -13,7 +13,15 @@ class File extends Home_Controller
     }
 public  function uploadfile($id)
 {
+
     $data=$this->file_model->getsta($id);
+    if($this->session->adminid)
+    {
+        //如果是管理员下载，则更新文件的处理进度
+        $d["user_state"]=1;
+        $d["id"]=$id;
+        $data=$this->file_model->update($d);
+    }
     $file = fopen ( $_SERVER['DOCUMENT_ROOT']  . $data->upload_url , "rb" );
     Header ( "Content-type: application/octet-stream" );
     //请求范围的度量单位

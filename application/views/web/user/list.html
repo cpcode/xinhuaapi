@@ -20,7 +20,7 @@
                     <tr role="row">
                         <th>已上传文件</th>
                         <th>处理进度</th>
-                        <th>反馈文件</th>
+                        <th>反馈文件进度</th>
                         <th>操作</th>
                     </thead>
                     <tbody>
@@ -31,9 +31,15 @@
                          switch($file->user_state){
                             case 0:echo '已提交';break;
                             case 1:echo '审核中';break;
+                            case 2:echo '审核完成';break;
                             default:echo '无相关记录';break;
                             } ?> </td>
-                        <td><?=is_null($file->download_url)?"无": $file->download_url?></td>
+                        <td>    <?php
+                         switch($file->admin_state){
+                            case 0:echo '已提交|<a href="'.base_url('admin/file/downloadfile/').$file->id.'">下载</a>';break;
+                            case 1:echo '审核中';break;
+                            default:echo '未提交';break;
+                            } ?></td>
                         <td><a class="btn btn-success btn-md">编辑</a></td>
                     </tr>
                     <?php endforeach; ?>
