@@ -20,7 +20,7 @@ class Order extends MY_Controller {
 
         $data['count']=$this->common_model->query_count("select count(1) from api_order where user_id='".$id."'");
         $sql="select a.*,b.pro_name,b.api_name from api_order a left join api_product b on a.pro_id=b.id where a.user_id='".$id."' order by a.id desc";
-        $sql=$sql.' limit '.($page)*$page_num.','.$page_num;
+        $sql=$sql.' limit '.$page.','.$page_num;
         $data['prolist']=  $this->common_model->querylist($sql);
         $data['userid']=$id;
         $this->load->library('common_page');

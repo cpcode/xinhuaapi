@@ -20,7 +20,7 @@ class Manager extends MY_Controller {
         if ($page=='')$page=0;
         $data['count']=$this->common_model->query_count("select count(1) from api_manager a left join api_group b on a.group_id=b.id");
         $sql='select a.*,b.groupname from api_manager a left join api_group b on a.group_id=b.id';
-        $sql=$sql.' limit '.($page)*$page_num.','.$page_num;
+        $sql=$sql.' limit '.$page.','.$page_num;
         $data['users']=$this->common_model->querylist($sql);
         $this->load->library('common_page');
 

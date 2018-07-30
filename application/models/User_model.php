@@ -10,14 +10,19 @@ public function add($post)
         'password' => md5($post['password']),
         'realname' => $post['realname'],
         'appkey' => $this->addkeys(),
+        'valcode'=>$this->valcode(),
         'pid'=>$post['pid'],
         'create_time' => date('Y-m-d h:i:s'),
         'update_time' => date('Y-m-d h:i:s')
-
     );
     return $this->db->insert('user', $data);
 }
 
+public function  valcode()
+{
+    $code=uniqid();
+    return 'xhsj'.$code;
+}
 /*获取uuid*/
 public  function  addkeys()
 {

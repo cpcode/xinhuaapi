@@ -24,7 +24,7 @@ class Userpro extends MY_Controller {
         $this->load->model('Common_model','common_model');
         $sql='select a.*,b.pro_name,b.api_name,b.isable as pro_isable FROM api_userpro a LEFT JOIN api_product b ON a.pro_id=b.id where user_id='.$id;
         $data['count']=$this->common_model->query_count('select count(1) FROM api_userpro a LEFT JOIN api_product b ON a.pro_id=b.id where user_id='.$id);
-        $sql=$sql.' limit '.($page)*$page_num.','.$page_num;
+        $sql=$sql.' limit '.$page.','.$page_num;
 
         $data['prolist']=$this->userpro_model->querylist($sql);
         $this->load->library('common_page');
@@ -68,7 +68,7 @@ class Userpro extends MY_Controller {
            if ($bool)
            {
                $charge['api_userid']=$data['user_id'];
-               $charge['api_upid']=$data['pro_id'];
+               $charge['api_proid']=$data['pro_id'];
                $charge['count']=$data['all_count'];
                $this->recharge_model->add($charge);
                showmessage("操作成功",'admin/userpro/index/'.$data['user_id']);

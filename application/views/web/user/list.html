@@ -21,6 +21,7 @@
                         <th>已上传文件</th>
                         <th>处理进度</th>
                         <th>反馈文件进度</th>
+                        <th>上传时间</th>
                         <th>操作</th>
                     </thead>
                     <tbody>
@@ -37,10 +38,15 @@
                         <td>    <?php
                          switch($file->admin_state){
                             case 0:echo '已提交|<a href="'.base_url('admin/file/downloadfile/').$file->id.'">下载</a>';break;
-                            case 1:echo '审核中';break;
+                            case 1:echo '已下载';break;
                             default:echo '未提交';break;
                             } ?></td>
-                        <td><a class="btn btn-success btn-md">编辑</a></td>
+                        <td><?=$file->upload_time?></td>
+                        <td>
+                            <?php if($file->user_state==0):?>
+                            <a class="btn btn-danger btn-md" href="#" onclick="javascript:del('<?=$file->id?>')">删除</a>
+                            <?php endif;?>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -56,4 +62,36 @@
                         <?=$page?>
                     </div></div></div>
         </div><!-- /.box-body -->
+        <div class="modal fade" id="modal-news" tabIndex="-1" style="width:300px;margin:0 auto; ">
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: red;">
+                        <h4 class="modal-title">提示</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+
+            function del($id) {
+                if ($id)
+                {
+                    $.ajax({
+                        url:"/web/file/delete/"+$id,
+                        type:"get",
+                        async:"false",
+                        success:function ($data) {
+                            $(".modal-body").html(" <p class=\"lead\">\n" +
+                                "                        <i class=\"fa fa-question-circle fa-lg\"></i>\n" +
+                                 $data+
+                                "                    </p>");
+                            $("#modal-news").modal();
+                            setTimeout("window.location.reload()",3000);
+                        }
+                    });
+                }
+            }
+        </script>
 <?php $this->load->view('web/layouts/footer.html'); ?>

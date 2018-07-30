@@ -20,7 +20,7 @@ class Product extends MY_Controller {
         if ($page=='')$page=0;
 
         $data['count']=$this->product_model->query_count();
-        $query=$this->product_model->getall($page_num,($page)*$page_num);
+        $query=$this->product_model->getall($page_num,$page);
         $data['prolist']=$query->result();
         $this->load->library('common_page');
         $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/admin/product/index');

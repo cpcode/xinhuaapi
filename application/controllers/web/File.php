@@ -11,6 +11,9 @@ class File extends Home_Controller
         $this->load->model('Common_model', 'common_model');
         $this->load->library('form_validation');
     }
+    /*
+     * 下载用户上传的文件
+     */
 public  function uploadfile($id)
 {
 
@@ -20,7 +23,7 @@ public  function uploadfile($id)
         //如果是管理员下载，则更新文件的处理进度
         $d["user_state"]=1;
         $d["id"]=$id;
-        $data=$this->file_model->update($d);
+        $this->file_model->update($d);
     }
     $file = fopen ( $_SERVER['DOCUMENT_ROOT']  . $data->upload_url , "rb" );
     Header ( "Content-type: application/octet-stream" );
@@ -41,10 +44,10 @@ public  function uploadfile($id)
      */
     public function index($page='')
     {
-        $page_num=1;
+        $page_num=20;
         if ($page=='')$page=0;
         $data['count']=$this->file_model->query_count();
-        $query=$this->file_model->getall($page_num,($page)*$page_num);
+        $query=$this->file_model->getall($page_num,$page);
         $data['list']=$query->result();
         $this->load->library('common_page');
         $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/web/file/index');
@@ -69,7 +72,7 @@ public  function uploadfile($id)
         else    $this->load->view('web/user/upload.html');
 
     }
-
+       /*文件上传*/
     public  function  uploadify()
     {
         $file=time().".log";//strtotime(date("yyMMdd"));//time().".log";
@@ -95,12 +98,32 @@ public  function uploadfile($id)
 
             if (in_array($fileParts['extension'],$fileTypes)) {
                 move_uploaded_file($tempFile,$targetFile);
-                echo $targetFolder.$savename;
+                echo $targetFolder.'/'.$savename;
             } else {
                 echo '格式不正确';
             }
         }
         else echo "token值不一致";
+    }
+
+    /**
+     * @param $id
+     * 用户提交文件后，后天未进行下载，用户可以删除重新上传
+     */
+    function  delete($id)
+    {
+        $data=$this->file_model->getsta($id);
+        if($data->user_state==0)
+        {
+            $sql="delete from api_file where id='".$id."'";
+           if ($this->common_model->del_data($sql))
+           {
+             echo "操作成功";
+           }
+        }
+        else
+        echo "您上传的文件已在审核中！删除请联系管理员";
+
     }
 
 }

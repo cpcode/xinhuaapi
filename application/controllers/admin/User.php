@@ -19,11 +19,23 @@ class User extends MY_Controller {
         $page_num=15;
         if ($page=='')$page=0;
         $data['count']=$this->user_model->query_count();
-        $query=$this->user_model->getall($page_num,($page)*$page_num);
+        $query=$this->user_model->getall($page_num,$page);
         $this->load->library('common_page');
         $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/admin/user/index');
         $data['users']=$query->result();
         $this->load->view('admin/users/list.html',$data);
+    }
+    function getchild($id,$page='0')
+    {
+        $page_num=15;
+        if ($page=='')$page=0;
+        $data['count']=$this->user_model->query_count();
+        $query=$this->user_model->getlist(array('pid'=>$id),$page_num,$page);
+        $this->load->library('common_page');
+        $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/admin/user/index');
+        $data['users']=$query->result();
+        $this->load->view('admin/users/list.html',$data);
+
     }
     /**
      * 添加企业用户

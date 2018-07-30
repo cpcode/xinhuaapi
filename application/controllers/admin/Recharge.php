@@ -19,7 +19,7 @@ class Recharge extends MY_Controller {
         if ($id=='') $id=$data['users'][0]->id;
         $data['count']=$this->common_model->query_count("select count(1) from api_recharge a left join api_product b on a.api_proid=b.id where a.api_userid='".$id."'");
         $sql="select a.*,b.pro_name,b.api_name from api_recharge a left join api_product b on a.api_proid=b.id where a.api_userid='".$id."'";
-        $sql=$sql.' limit '.($page)*$page_num.','.$page_num;
+        $sql=$sql.' limit '.$page.','.$page_num;
         $data['prolist']=$this->common_model->querylist($sql);
         $data['userid']=$id;
         $this->load->library('common_page');

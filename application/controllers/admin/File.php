@@ -14,9 +14,18 @@ public  function downloadfile($id)
 {
     $data=$this->file_model->getsta($id);
     $filepath=$_SERVER['DOCUMENT_ROOT']  . $data->upload_url;
-    $file = fopen ( $filepath , "rb" );
-    if (file_exists($file))
+    if (file_exists($filepath))
     {
+        if($this->session->uid)
+        {
+            //如果是前台用户下载，则更新验证文件的处理进度
+            $d["admin_state"]=1;
+            $d["user_state"]=2;
+            $d["id"]=$id;
+            $this->file_model->update($d);
+        }
+
+        $file = fopen ( $filepath , "rb" );
         Header ( "Content-type: application/octet-stream" );
         //请求范围的度量单位
         Header ( "Accept-Ranges: bytes" );
@@ -39,7 +48,7 @@ public  function downloadfile($id)
         $page_num=15;
         if ($page=='')$page=0;
         $data['count']=$this->file_model->query_count();
-        $query=$this->file_model->getall($page_num,($page)*$page_num);
+        $query=$this->file_model->getall($page_num,$page);
         $data['list']=$query->result();
         $this->load->library('common_page');
         $data['page']=$this->common_page->create_page($data['count'],$page,$page_num,'/admin/file/index');

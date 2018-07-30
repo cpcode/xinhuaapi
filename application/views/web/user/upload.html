@@ -54,6 +54,7 @@
                         'fileSizeLimit' : 0,
                         'fileTypeExts': '*.txt; *.doc; *.xml; *.docx',
                         'onUploadSuccess': function (file, data,response) {
+                            alert(data);
                             $("#upload_url").val(data);//file.name
                             if ($("#name").val()=="")
                                 $("#name").val(file.name);
