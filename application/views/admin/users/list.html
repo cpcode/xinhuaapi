@@ -41,7 +41,7 @@
                                 <th>用户名</th>
                                 <th>企业名称</th>
                                 <th>appkey</th>
-                                <th>验证码</th>
+                                <th>随机验证码</th>
                                 <th>创建时间</th>
                                 <th>近期登录</th>
                                 <th>开启/禁用</th>
@@ -53,7 +53,7 @@
                                 <td><a href="<?php echo site_url('admin/user/edit/').$user->id?>"> <?=$user->username?></a></td>
                                 <td><a href="<?php echo site_url('admin/user/getchild/').$user->id?>"><?=$user->realname?></a></td>
                                 <td><?=$user->appkey?></td>
-                                <td><?=$user->valcode?> </td>
+                                <td><?=$user->public_key?> </td>
                                 <td><?=$user->create_time?></td>
                                 <td><?=$user->update_time?></td>
                                 <td>

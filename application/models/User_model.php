@@ -10,7 +10,7 @@ public function add($post)
         'password' => md5($post['password']),
         'realname' => $post['realname'],
         'appkey' => $this->addkeys(),
-        'valcode'=>$this->valcode(),
+        'public_key'=>$this->valcode(),
         'pid'=>$post['pid'],
         'create_time' => date('Y-m-d h:i:s'),
         'update_time' => date('Y-m-d h:i:s')
