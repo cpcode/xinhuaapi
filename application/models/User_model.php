@@ -20,8 +20,8 @@ public function add($post)
 
 public function  valcode()
 {
-    $code=uniqid();
-    return 'xhsj'.$code;
+    $code=md5(uniqid());
+    return substr($code,16) ;
 }
 /*获取uuid*/
 public  function  addkeys()
