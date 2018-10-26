@@ -60,7 +60,7 @@ class Login extends CI_Controller {
         $word=strtolower($this->session->code['word']);
         $code = strtolower($this->input->post('code'));
         if ($word!=$code)
-        {  $data['alert'] = "验证码错误！".$word;
+        {  $data['alert'] = "验证码错误！";
             $this->load->view('admin/login.html', $data);
             return false;}
         $username = $this->input->post('username');
