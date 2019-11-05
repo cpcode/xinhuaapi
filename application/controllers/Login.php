@@ -41,6 +41,8 @@ class Login extends CI_Controller {
             } else {
                 $this->session->username = $username;
                 $this->session->uid = $res->id;
+                $this->session->realname = $res->realname;
+
                 $cookie = array(
                     'name' => 'username',
                     'value' => $res->username,
@@ -54,7 +56,7 @@ class Login extends CI_Controller {
                 );
                 $this->input->set_cookie($cookie2);
                 $this->user_model->replacelogtime($res->id);
-                redirect('web/file/index');
+                redirect('web/api/index');
             }
         } else {
             $data['alert'] = "用户名或密码错误！";

@@ -45,11 +45,8 @@
                         .nav > li:hover .dropdown-menu {display: block;}
                     </style>
                     <ul class="nav navbar-nav  navbar-left">
-                        <li>
-                            <a href="#">平台</a>
-                        </li>
                         <li class="active">
-                            <a href="#">系统</a>
+                            <a href="javascrpit:void(0)">系统</a>
                         </li>
 
                         <ul class="other nav navbar-nav navbar-left">
@@ -60,7 +57,7 @@
 
 
                         <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->username?> <span class="caret"></span></a>
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->realname?> <span class="caret"></span></a>
                             <ul class="dropdown-menu color-gray" role="menu">
                                 <li>
                                     <a href="#" target="_blank"><i class="fa fa-user"></i> 我的账号</a>
@@ -80,7 +77,7 @@
         <div class="container">
             <div class="panel panel-content main-panel-content ">
                 <div class="content-head panel-heading main-panel-heading">
-                    <span class="font-lg"><i class="fa fa-cog"></i> 系统管理</span>					</div>
+                    <span class="font-lg"><i class="fa fa-cog"></i> 接口测试</span>					</div>
                 <div class="panel-body clearfix main-panel-body ">
                     <div class="left-menu">
                         <?php $this->load->view('web/layouts/left.html'); ?>

@@ -24,6 +24,13 @@ public function getall()
     return $this->db->get('userpro');
 }
 
+//获取用户可用接口
+public function getendableapi($uid){
+    $sql = "SELECT api_userpro.id,charge_count,all_count,pro_name,api_name from api_userpro LEFT JOIN api_product on api_userpro.pro_id = api_product.id where api_userpro.user_id = ". $uid ." and api_userpro.isable = 1 and api_product.isable = 1";
+    $query = $this->db->query($sql);
+    return $query->result();
+}
+
 //根据id获取接口
 public function getsta($id)
 {

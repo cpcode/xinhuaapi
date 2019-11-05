@@ -1,0 +1,250 @@
+<?php $this->load->view('web/layouts/header.html'); ?>
+
+<div class="welcome-container ng-scope" id="js-home-welcome" ng-controller="WelcomeCtrl">
+    <div class="welcome-container">
+        <div class="panel we7-panel account-stat">
+            <div class="panel-heading">
+                <div class="row page-title-row">
+                    填入测试数据
+                </div>
+            </div>
+            <div class="panel-body we7-padding-vertical formdiv">
+
+            </div>
+            <div class="panel-heading">
+                <div class="row page-title-row">
+                    测试结果
+                </div>
+            </div>
+            <div class="panel-body we7-padding-vertical">
+                <div class="result">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    /**
+     * 自动将form表单封装成json对象
+     */
+    $.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [ o[this.name] ];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+    var tmpform = '<form class="form-horizontal form" role="form">{{inputs}}<div class="form-group"><div class="col-sm-offset-2 col-sm-10"><button type="submit" class="btn btn-default">提交</button></div></div></form>';
+    var tmpinput = '<div class="form-group"><label for="firstname" class="col-sm-2 control-label">{{fieldname}}</label><div class="col-sm-4"><input type="text" class="form-control" id="{{field}}" name="{{field}}" placeholder="请输入{{fieldname}}"></div></div>';
+    var tmpfile = '<div class="form-group"><label for="firstname" class="col-sm-2 control-label">{{fieldname}}</label><div class="col-sm-4"><input type="file" id="{{field}}" class="form-control"><img class="{{field}}" style="width:200px"><input type="hidden" name="{{field}}"></div></div>';
+
+    var apiname;
+    function echohtml(apiname) {
+        var data;
+        var inputall = "";
+        var formhtml = "";
+        switch (apiname){
+            case "idnamecheck":
+                data = [{"field":"idNo","fieldname":"身份证号"},{"field":"name","fieldname":"姓名"}];
+                break;
+            case "szmcmcch":
+                data = [{"field":"idNo","fieldname":"身份证号"},{"field":"name","fieldname":"姓名"},{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "mobile":
+                data = [{"field":"idNo","fieldname":"身份证号"},{"field":"name","fieldname":"姓名"},{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "mobilestatushj":
+                data = [{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "mobileonlinehj":
+                data = [{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "mobileonline":
+                data = [{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "mobilestatus":
+                data = [{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "telecom":
+                data = [{"field":"idNo","fieldname":"身份证号"},{"field":"name","fieldname":"姓名"},{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "unicom":
+                data = [{"field":"idNo","fieldname":"身份证号"},{"field":"name","fieldname":"姓名"},{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "unicomstatus":
+                data = [{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "unicomonline":
+                data = [{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "telecomonline":
+                data = [{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "telecomstatus":
+                data = [{"field":"phone","fieldname":"手机号"}];
+                break;
+            case "photoverification":
+                data = [{"field":"idNo","fieldname":"身份证号"},{"field":"name","fieldname":"姓名"},{"field":"photo","fieldname":"上传图片","type":"file"}];
+                break;
+            case "banktwo":
+                data = [{"field":"name","fieldname":"姓名"},{"field":"bankcard","fieldname":"银行卡号"}];
+                break;
+            case "bankthree":
+                data = [{"field":"idNo","fieldname":"身份证号"},{"field":"name","fieldname":"姓名"},{"field":"bankcard","fieldname":"银行卡号"}];
+                break;
+            case "bankfour":
+                data = [{"field":"idNo","fieldname":"身份证号"},{"field":"name","fieldname":"姓名"},{"field":"bankcard","fieldname":"银行卡号"},{"field":"phone","fieldname":"手机号"}];
+                break;
+
+            case "businessthree":
+                data = [{"field":"name","fieldname":"法人姓名"},{"field":"companyname","fieldname":"公司名称"},{"field":"usccode","fieldname":"统一社会信用代码"}];
+                break;
+            case "companybasic":
+                data = [{"field":"companyname","fieldname":"公司名称"}];
+                break;
+            case "businessfour":
+                data = [{"field":"name","fieldname":"法人姓名"},{"field":"idCard","fieldname":"身份证号"},{"field":"companyName","fieldname":"公司名称"},{"field":"regNo","fieldname":"统一社会信用代码"}];
+                break;
+            case "vincheck":
+                data = [{"field":"vin","fieldname":"车架号"}];
+                break;
+            case "houseprice":
+                data = [{"field":"city","fieldname":"城市"},{"field":"address","fieldname":"详细地址"},{"field":"square","fieldname":"面积"}];
+                break;
+            case "invoices":
+                data = [{"field":"fplx","fieldname":"发票类型"},{"field":"fphm","fieldname":"发票号码"},{"field":"fpdm","fieldname":"发票代码"},{"field":"jym","fieldname":"校验码"},{"field":"fpje","fieldname":"发票金额"},{"field":"kprq","fieldname":"开票日期"}];
+                break;
+            case "sxperson":
+                data = [{"field":"idNo","fieldname":"身份证号"}];
+                break;
+            case "sxcompany":
+                data = [{"field":"key","fieldname":"关键字"},{"field":"keytype","fieldname":"关键字类型"}];
+                break;
+            case "ocridcard":
+                data = [{"field":"imgtype","fieldname":"图片类型"},{"field":"side","fieldname":"正反面"},{"field":"photo","fieldname":"上传图片","type":"file"}];
+                break;
+            case "ocrbank":
+                data = [{"field":"imgtype","fieldname":"图片类型"},{"field":"photo","fieldname":"上传图片","type":"file"}];
+                break;
+            case "ocrvehicle":
+                data = [{"field":"photo","fieldname":"上传图片","type":"file"}];
+                break;
+            case "ocrbusiness":
+                data = [{"field":"imgtype","fieldname":"图片类型"},{"field":"photo","fieldname":"上传图片","type":"file"}];
+                break;
+            default:
+                data = null;
+                break;
+        }
+        if(data){
+            for (var index in data){
+                if(data[index]["type"] == null) {
+                    inputall += tmpinput.replace(new RegExp('{{fieldname}}', "g" ),data[index]["fieldname"]).replace(new RegExp('{{field}}', "g" ),data[index]["field"]);
+                }
+                else {
+                    inputall += tmpfile.replace(new RegExp('{{fieldname}}', "g" ),data[index]["fieldname"]).replace(new RegExp('{{field}}', "g" ),data[index]["field"]);
+                }
+            }
+            formhtml = tmpform.replace('{{inputs}}',inputall)
+            $(".formdiv").html(formhtml);
+
+            $(":file").change(function () {
+                var that = this;
+                if(window.FileReader) {
+                    var oFileReader = new FileReader(),
+                        oFile = $(this)[0].files[0];
+                    // 过滤非图片文件
+                    if(/^image*/.test(oFile.type)) {
+                        oFileReader.onloadend = function(e) {
+                            imgb64 = e.target.result;
+                            imgb64r = imgb64.replace(/^data:image\/\w+;base64,/, "");
+                            var name = $(that).attr("id");
+                            $("[name='"+ name +"']").val(imgb64r);
+                            $("." +name).attr("src",imgb64);
+//                            oBase64.innerHTML = imgb64r;
+//                            oPreview.src = imgb64;
+                        };
+                        // 将图片转为base64格式
+                        oFileReader.readAsDataURL(oFile);
+                    }else {
+                        alert("请选择图片文件!");
+                        $(this).val("");
+                    }
+//                    oPreview.src = "";
+                } else {
+                    alert("您当前使用的浏览器不支持读取文件功能");
+                }
+            });
+
+            $(".form").submit(function (e) {
+                data = JSON.stringify($('form').serializeObject());
+                postdata(data);
+                return false;
+            })
+
+        }else {
+            $(".formdiv").html("");
+        }
+
+    }
+
+    function postdata(data) {
+        url = "/web/api/apitest/" + apiname;
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',  // 请求方式为jsonp
+            data: data,
+            success: function(data) {
+                strdata = JSON.stringify(data);
+                //console.log(data);
+                $(".result").text(strdata);
+            }
+
+        });
+        return false;
+    }
+
+
+
+    var userpro = <?php echo $userpro?>;
+
+    $(function () {
+
+        var hook = location.hash;
+        if (hook){
+            apiname = hook.substr(1);
+            echohtml(apiname);
+        }
+        var html = "";
+        var tmp = '<li class="list-group-item "><a href="#{{apiname}}" data="{{id}}" class="text-over"><i class="fa fa-user"></i>{{proname}}</a></li>';
+        for(var row in userpro){
+
+            html += tmp.replace('{{id}}',row).replace('{{proname}}',userpro[row]['pro_name']).replace('{{apiname}}',userpro[row]['api_name']);
+        }
+        $(".list").html(html);
+
+        $('.list a').bind('click',function () {
+            index = $(this).attr('data');
+            apiname = userpro[index]['api_name'];
+            //location.href = location.href + "#" + apiname;
+            echohtml(apiname);
+
+        });
+    });
+
+
+</script>
+<?php $this->load->view('web/layouts/footer.html'); ?>
