@@ -39,6 +39,8 @@ class Api extends Home_Controller
         if (isset($_GET["starttime"]) || isset($_GET["endtime"])){
             $this->load->model('Userpro_model','userpro_model');
             $data['all'] = $this->userpro_model->getusage($this->session->uid,$data['starttime'],$data['endtime']);
+        }else{
+            $data['all'] = null;
         }
         $this->load->view('web/api/usage.html',$data);
     }
