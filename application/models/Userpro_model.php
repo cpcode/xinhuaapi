@@ -99,7 +99,7 @@ public function setstatus($id)
         }
         $sql .=" GROUP BY api_order.pro_id";
 
-        echo $sql;
+        //echo $sql;
         $query = $this->db->query($sql);
         return $query->result();
     }
