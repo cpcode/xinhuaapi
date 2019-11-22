@@ -90,7 +90,7 @@ public function setstatus($id)
 
     //获取条数
     function getusage($uid,$starttime = null,$endtime = null){
-        $sql = "SELECT api_order.pro_id,api_product.pro_name,count(api_order.id) FROM `api_order` LEFT JOIN api_product on api_order.pro_id = api_product.id where api_order.user_id = ".$uid."  and api_order.ischarge = 1";
+        $sql = "SELECT api_order.pro_id,api_product.pro_name,count(api_order.id) as num FROM `api_order` LEFT JOIN api_product on api_order.pro_id = api_product.id where api_order.user_id = ".$uid."  and api_order.ischarge = 1";
         if($starttime){
             $sql .= " and api_order.create_time >= '".$starttime."'";
         }

@@ -20,7 +20,14 @@
             </div>
             <div class="panel-body we7-padding-vertical">
                 <div class="result">
-                    <?php var_dump($all);?>
+                    <table>
+                    <?php foreach ($all as $item):?>
+                        <tr>
+                            <td><?php echo $item->pro_name;?></td>
+                            <td><?php echo $item->num;?></td>
+                        </tr>
+                    <?php endforeach?>
+                    </table>
                 </div>
             </div>
         </div>
