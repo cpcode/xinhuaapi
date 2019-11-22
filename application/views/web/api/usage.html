@@ -1,0 +1,48 @@
+<?php $this->load->view('web/layouts/header2.html'); ?>
+<script src="<?php echo base_url('resource/index/layer/laydate.js');?>"></script>
+<link href="<?php echo base_url('resource/index/layer/theme/default/layer.css');?>">
+
+<div class="welcome-container ng-scope" id="js-home-welcome" ng-controller="WelcomeCtrl">
+    <div class="welcome-container">
+        <div class="panel we7-panel account-stat">
+            <div class="panel-heading">
+                <div class="row page-title-row">
+                    <span>请选择查询时间段：</span><input type="text" id="starttime" value="<?php echo $starttime;?>" readonly><span>至</span><input type="text" id="endtime" value="<?php echo $endtime;?>" readonly><input class="btn btn-default chaxun" type="button" value="查询">
+                </div>
+            </div>
+            <div class="panel-body we7-padding-vertical formdiv">
+
+            </div>
+            <div class="panel-heading">
+                <div class="row page-title-row">
+                    查询结果
+                </div>
+            </div>
+            <div class="panel-body we7-padding-vertical">
+                <div class="result">
+                    <?php var_dump($all);?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        laydate.render({
+            elem: '#starttime',
+            type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endtime',
+            type: 'datetime'
+        });
+        $(".chaxun").on('click',function () {
+            var starttime = $("#starttime").val();
+            var endtime = $("#endtime").val();
+            location.href = "/web/api/usage?" + "starttime=" + starttime +　"&endtime=" + endtime;
+        });
+    })
+</script>
+
+<?php $this->load->view('web/layouts/footer.html'); ?>

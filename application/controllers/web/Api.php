@@ -24,6 +24,25 @@ class Api extends Home_Controller
 
     }
 
+    public function usage(){
+        if (isset($_GET["starttime"])){
+            $data['starttime'] = $_GET["starttime"];
+        }else{
+            $data['starttime'] = null;
+        }
+        if (isset($_GET["endtime"])){
+            $data['endtime']  = $_GET["endtime"];
+        }else{
+            $data['endtime'] = null;
+        }
+
+        if (isset($_GET["starttime"]) || isset($_GET["endtime"])){
+            $this->load->model('Userpro_model','userpro_model');
+            $data['all'] = $this->userpro_model->getusage($this->session->uid,$data['starttime'],$data['endtime']);
+        }
+        $this->load->view('web/api/usage.html',$data);
+    }
+
     public function getdata($url,$datajson,$key){
         try
         {
